@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>USER PROFILE - THICKETS</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #fff;
+        }
+
+        header {
+            position: relative;
+            display: flex;
+            align-items: center;
+            background-color: #A0AD96;
+            padding: 10px 20px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            height: 60px;
+        }
+
+        .brand {
+            font-family: 'Work Sans', sans-serif;
+            font-size: 2.5rem;
+            font-weight: 900;
+            color: #fff;
+            text-decoration: none;
+            position: absolute;
+            left: 20px;
+        }
+
+        .brand:hover {
+            cursor: pointer;
+        }
+
+        .search-bar-container {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 400px;
+        }
+
+        .search-bar {
+            display: flex;
+            align-items: center;
+            background-color: #fff;
+            padding: 3px 10px;
+            border-radius: 20px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+            width: 100%;
+        }
+
+        .search-bar input {
+            border: none;
+            outline: none;
+            flex-grow: 1;
+            padding: 5px;
+            font-size: 1rem;
+        }
+
+        .search-bar button {
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 1.2rem;
+            color: #A0AD96;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .header-buttons {
+            position: absolute;
+            right: 20px;
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+
+        .header-buttons button {
+            background: none;
+            border: none;
+            cursor: pointer;
+        }
+
+        .header-buttons i {
+            font-size: 1.5rem;
+            color: #fff;
+        }
+
+        .menu-overlay {
+            position: absolute;
+            top: 70px;
+            right: 10px;
+            width: 200px;
+            background-color: #A0AD96;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+            display: none;
+            z-index: 1000;
+        }
+
+        .menu-overlay ul {
+            list-style: none;
+            margin: 0;
+            padding: 10px 0;
+        }
+
+        .menu-overlay li {
+            padding: 10px 20px;
+            font-size: 1rem;
+            color: #fff;
+            cursor: pointer;
+        }
+
+        .menu-overlay li:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .content-wrapper {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: calc(100vh - 80px);
+            background-color: #e0e0e0;
+            width: 90%;
+            max-width: 850px;
+            margin: 0 auto;
+            padding: 20px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            position: relative;
+        }
+
+        .page-title {
+            font-size: 2.2rem;
+            font-weight: bold;
+            color: #333;
+            margin: 30px;
+            margin-left: 60px;
+            margin-bottom: 20px;
+            align-self: flex-start;
+        }
+
+        .profile-container {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            background-color: #ccc;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 690px;
+        }
+
+        .profile-name {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #333;
+            margin-left: 10px;
+            margin-bottom: 15px;
+        }
+
+        .profile-field {
+            font-size: 1rem;
+            color: #333;
+            margin-left: 10px;
+            margin-bottom: 10px;
+        }
+
+        .orders-section {
+            margin-top: 30px;
+            width: 100%;
+            max-width: 690px;
+            background-color: #e0e0e0;
+        }
+
+        .orders-section h2 {
+            font-size: 1.5rem;
+            color: #333;
+            margin-bottom: 15px;
+        }
+
+        .orders-section p {
+            font-size: 1rem;
+            color: #666;
+            text-align: center;
+        }
+
+        .order-item {
+            margin-bottom: 15px;
+            padding: 10px;
+            background-color: #ccc;
+            border-radius: 10px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+
+        .order-item strong {
+            display: block;
+            font-size: 1rem;
+            color: #333;
+        }
+
+        .order-item span {
+            display: block;
+            font-size: 0.9rem;
+            color: #666;
+        }
+
+        .logout-button {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            background-color: #BF4041;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            padding: 10px 15px;
+            cursor: pointer;
+            font-size: 1rem;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .logout-button:hover {
+            background-color: #790700;
+        }
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@900&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <!-- Header Section -->
+    <header>
+        <a href="homepage.html" class="brand">THICKETS</a>
+        <div class="search-bar-container">
+            <div class="search-bar">
+                <input type="text" placeholder="Search">
+                <button><i class="fas fa-search"></i></button>
+            </div>
+        </div>
+        <div class="header-buttons">
+            <button><i class="fas fa-heart"></i></button>
+            <button id="profile-icon"><i class="fas fa-user"></i></button>
+            <button id="menu-button"><i class="fas fa-bars"></i></button>
+        </div>
+    </header>
+
+    <!-- Menu Overlay -->
+    <div class="menu-overlay" id="menu-overlay">
+        <ul>
+            <li>User Profile</li>
+            <li>Chatbot</li>
+            <li>Settings</li>
+        </ul>
+    </div>
+
+    <!-- Content Wrapper -->
+    <div class="content-wrapper">
+        <h1 class="page-title">User Profile</h1>
+        <div class="profile-container">
+            <p class="profile-name" id="profile-name"></p>
+            <p class="profile-field"><strong>Email:</strong> <span id="profile-email"></span></p>
+        </div>
+
+        <div class="orders-section">
+            <h2>Past Orders</h2>
+            <div id="orders-container">
+                <p>No Data Available</p>
+            </div>
+        </div>
+
+        <button class="logout-button" id="logout-button">Logout</button>
+    </div>
+
+    <!-- Footer Section -->
+    <footer style="background-color: #A0AD96; height: 80px;"></footer>
+
+    <script>
+        // Load user details from sessionStorage
+        const user = JSON.parse(sessionStorage.getItem('loggedInUser'));
+
+        if (user) {
+            document.getElementById('profile-name').textContent = user.name;
+            document.getElementById('profile-email').textContent = user.email;
+
+            const ordersContainer = document.getElementById('orders-container');
+            const orders = user.orders && Array.isArray(user.orders) ? user.orders : [];
+
+            if (orders.length > 0) {
+                ordersContainer.innerHTML = "";
+                orders.forEach(order => {
+                    const orderElement = document.createElement('div');
+                    orderElement.className = 'order-item';
+
+                    const seats = Array.isArray(order.seats) ? order.seats.join(', ') : 'No seats';
+
+                    orderElement.innerHTML = `
+                        <strong>Concert:</strong> ${order.concert}<br>
+                        <strong>Date:</strong> ${order.date}<br>
+                        <strong>Seats:</strong> ${seats}
+                    `;
+
+                    ordersContainer.appendChild(orderElement);
+                });
+            }
+        }
+
+        const menuButton = document.getElementById('menu-button');
+        const menuOverlay = document.getElementById('menu-overlay');
+
+        menuButton.addEventListener('click', (event) => {
+            event.stopPropagation();
+            menuOverlay.style.display = menuOverlay.style.display === 'block' ? 'none' : 'block';
+        });
+
+        document.addEventListener('click', () => {
+            menuOverlay.style.display = 'none';
+        });
+
+        menuOverlay.addEventListener('click', (event) => {
+            event.stopPropagation();
+        });
+
+        // Logout functionality
+        const logoutButton = document.getElementById('logout-button');
+        logoutButton.addEventListener('click', () => {
+            sessionStorage.removeItem('loggedInUser');
+            window.location.href = 'homepage.html';
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>2024 CRUSH HOUR: O</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #fff;
+        }
+
+        header {
+            position: relative;
+            display: flex;
+            align-items: center;
+            background-color: #A0AD96;
+            padding: 10px 20px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            height: 60px;
+        }
+
+        .brand {
+            font-family: 'Work Sans', sans-serif;
+            font-size: 2.5rem;
+            font-weight: 900;
+            color: #fff;
+            text-decoration: none;
+            position: absolute;
+            left: 20px;
+        }
+
+        .brand:hover {
+            cursor: pointer;
+        }
+
+        .search-bar-container {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 400px;
+        }
+
+        .search-bar {
+            display: flex;
+            align-items: center;
+            background-color: #fff;
+            padding: 3px 10px;
+            border-radius: 20px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+            width: 100%;
+        }
+
+        .search-bar input {
+            border: none;
+            outline: none;
+            flex-grow: 1;
+            padding: 5px;
+            font-size: 1rem;
+        }
+
+        .search-bar button {
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 1.2rem;
+            color: #A0AD96;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .header-buttons {
+            position: absolute;
+            right: 20px;
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+
+        .header-buttons button {
+            background: none;
+            border: none;
+            cursor: pointer;
+        }
+
+        .header-buttons i {
+            font-size: 1.5rem;
+            color: #fff;
+        }
+
+        .menu-overlay {
+            position: absolute;
+            top: 70px;
+            right: 10px;
+            width: 200px;
+            background-color: #A0AD96;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+            display: none;
+            z-index: 1000;
+        }
+
+        .menu-overlay ul {
+            list-style: none;
+            margin: 0;
+            padding: 10px 0;
+        }
+
+        .menu-overlay li {
+            padding: 10px 20px;
+            font-size: 1rem;
+            color: #fff;
+            cursor: pointer;
+        }
+
+        .menu-overlay li:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .content-wrapper {
+            display: flex;
+            flex-direction: row;
+            align-items: flex-start;
+            justify-content: space-between;
+            min-height: calc(100vh - 80px);
+            background-color: #e0e0e0;
+            width: 90%;
+            max-width: 850px;
+            margin: 0 auto;
+            padding: 20px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            position: relative;
+        }
+
+        .poster-container {
+            position: relative;
+            margin-top: 20px;
+            flex: 0 0 auto;
+            margin-left: -120px;
+            display: flex;
+            align-items: flex-end;
+        }
+
+        .poster-container img {
+            width: 100%;
+            max-width: 500px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            position: relative;
+            z-index: 10;
+        }
+
+        .content-right {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            height: 100%;
+            margin-right: 40px;
+        }
+
+        .info {
+            font-size: 1rem;
+            color: #333;
+            margin-top: 20px;
+            line-height: 1.6;
+        }
+
+        .info b {
+            font-weight: bold;
+        }
+
+        .dropdown {
+            margin-top: 10px;
+            background-color: #e0e0e0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            width: 200px;
+        }
+
+        .dropdown select {
+            width: 100%;
+            padding: 5px;
+            font-size: 1rem;
+            border: none;
+            background-color: #f9f9f9;
+            border-radius: 5px;
+        }
+
+        .seats-container {
+            margin-top: 20px;
+            display: grid;
+            grid-template-columns: repeat(10, 1fr);
+            gap: 5px;
+            width: 100%;
+            max-width: 400px;
+        }
+
+        .seat {
+            width: 30px;
+            height: 30px;
+            background-color: #ccc;
+            border: 1px solid #999;
+            border-radius: 5px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background-color 0.3s;
+        }
+
+        .seat.selected {
+            background-color: #A0AD96;
+            color: #fff;
+            font-weight: bold;
+        }
+
+        .seat.booked {
+            background-color: #999;
+            cursor: not-allowed;
+        }
+
+        .checkout-button {
+            padding: 15px 30px;
+            background-color: #5f6f52;
+            color: white;
+            font-size: 1.2rem;
+            font-weight: bold;
+            border: none;
+            border-radius: 15px;
+            cursor: pointer;
+            align-self: flex-end;
+            margin-top: 125px;
+            margin-right: 176px;
+        }
+
+        .checkout-button:hover {
+            background-color: #8C9B79;
+        }
+
+        @media (max-width: 600px) {
+            .brand {
+                font-size: 2rem;
+            }
+            .content-wrapper {
+                flex-direction: column;
+                align-items: center;
+            }
+            .search-bar-container {
+                width: 80%;
+            }
+            .poster-container img {
+                width: 90%;
+                transform: translateX(-50px);
+            }
+            .checkout-button {
+                align-self: center;
+            }
+        }
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@900&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <header>
+        <a href="homepage.html" class="brand">THICKETS</a>
+        <div class="search-bar-container">
+            <div class="search-bar">
+                <input type="text" placeholder="Search">
+                <button><i class="fas fa-search"></i></button>
+            </div>
+        </div>
+        <div class="header-buttons">
+            <button><i class="fas fa-heart"></i></button>
+            <button id="profile-icon"><i class="fas fa-user"></i></button>
+            <button id="menu-button"><i class="fas fa-bars"></i></button>
+        </div>
+    </header>
+
+    <div class="menu-overlay" id="menu-overlay">
+        <ul>
+            <li id="user-profile-menu">User Profile</li>
+            <li>Chatbot</li>
+            <li>Settings</li>
+        </ul>
+    </div>
+
+    <div class="content-wrapper">
+        <div class="poster-container">
+            <img src="crush hour.jpg" alt="Crush Hour Poster">
+        </div>
+        <div class="content-right">
+            <div class="info">
+                <b>Choose date:</b>
+                <div class="dropdown">
+                    <select id="date-dropdown">
+                        <option value="2024-12-20">2024.12.20 (Fri)</option>
+                        <option value="2024-12-21">2024.12.21 (Sat)</option>
+                        <option value="2024-12-22">2024.12.22 (Sun)</option>
+                    </select>
+                </div>
+                <br><b>Choose seats:</b>
+                <div class="seats-container" id="seats-container">
+                    <!-- Seats will be dynamically generated -->
+                </div>
+            </div>
+            <button class="checkout-button" id="checkoutButton">CHECKOUT</button>
+        </div>
+    </div>
+
+    <footer style="background-color: #A0AD96; height: 80px;"></footer>
+
+    <script>
+        const profileIcon = document.getElementById('profile-icon');
+        const userProfileMenu = document.getElementById('user-profile-menu');
+        const loggedInUser = sessionStorage.getItem('loggedInUser');
+
+        function handleProfileRedirect() {
+            if (loggedInUser) {
+                window.location.href = 'profile.html';
+            } else {
+                window.location.href = 'signup.html';
+            }
+        }
+
+        profileIcon.addEventListener('click', handleProfileRedirect);
+        userProfileMenu.addEventListener('click', handleProfileRedirect);
+
+        const menuButton = document.getElementById('menu-button');
+        const menuOverlay = document.getElementById('menu-overlay');
+
+        menuButton.addEventListener('click', (event) => {
+            event.stopPropagation();
+            menuOverlay.style.display = menuOverlay.style.display === 'block' ? 'none' : 'block';
+        });
+
+        document.addEventListener('click', () => {
+            menuOverlay.style.display = 'none';
+        });
+
+        menuOverlay.addEventListener('click', (event) => {
+            event.stopPropagation();
+        });
+
+        const seatsContainer = document.getElementById('seats-container');
+        const dateDropdown = document.getElementById('date-dropdown');
+        const selectedSeats = new Set();
+
+        function generateAllSeats() {
+            const seats = [];
+            for (let row = 1; row <= 9; row++) {
+                for (let col = 65; col <= 74; col++) { // ASCII values for A-J
+                    seats.push(`${row}${String.fromCharCode(col)}`);
+                }
+            }
+            return seats;
+        }
+
+        const bookedSeats = {
+            '2024-12-20': ['1A', '1B', '1C', '1D', '1E', '1F', '1H', '1I', '1J', '2A', '2I', '2J', '3D', '3E', '3F'],
+            '2024-12-21': ['3A', '3B', '3C'],
+            '2024-12-22': ['4A', '4B', '5A']
+        };
+
+        function renderSeats(date) {
+            const allSeats = generateAllSeats();
+            const booked = bookedSeats[date] || [];
+            seatsContainer.innerHTML = '';
+
+            allSeats.forEach(seat => {
+                const seatDiv = document.createElement('div');
+                seatDiv.classList.add('seat');
+                seatDiv.textContent = seat;
+
+                if (booked.includes(seat)) {
+                    seatDiv.classList.add('booked');
+                } else {
+                    seatDiv.addEventListener('click', () => {
+                        if (seatDiv.classList.contains('selected')) {
+                            seatDiv.classList.remove('selected');
+                            selectedSeats.delete(seat);
+                        } else if (selectedSeats.size < 3) {
+                            seatDiv.classList.add('selected');
+                            selectedSeats.add(seat);
+                        } else {
+                            alert('You can only select up to 3 seats.');
+                        }
+                    });
+                }
+
+                seatsContainer.appendChild(seatDiv);
+            });
+        }
+
+        dateDropdown.addEventListener('change', (event) => {
+            renderSeats(event.target.value);
+        });
+
+        // Initial render for the default selected date
+        renderSeats(dateDropdown.value);
+
+        const checkoutButton = document.getElementById('checkoutButton');
+
+        checkoutButton.addEventListener('click', () => {
+            if (selectedSeats.size === 0) {
+                alert('No seats selected. Please select at least one seat before proceeding to checkout.');
+                return;
+            }
+            const selectedDate = dateDropdown.value;
+            const selectedSeatsArray = Array.from(selectedSeats);
+            localStorage.setItem('selectedDate', selectedDate);
+            localStorage.setItem('selectedSeats', JSON.stringify(selectedSeatsArray));
+            window.location.href = 'checkout.html';
+        });
+    </script>
+</body>
+</html>

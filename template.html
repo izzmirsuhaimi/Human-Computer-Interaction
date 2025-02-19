@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>2024 Crush Hour Concert</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #fff;
+        }
+
+        header {
+            position: relative;
+            display: flex;
+            align-items: center;
+            background-color: #A0AD96;
+            padding: 10px 20px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            height: 60px;
+        }
+
+        .brand {
+            font-family: 'Work Sans', sans-serif;
+            font-size: 2.5rem;
+            font-weight: 900;
+            color: #fff;
+            text-decoration: none;
+            position: absolute;
+            left: 20px; /* Align the brand to the left */
+        }
+
+        .brand:hover {
+            cursor: pointer;
+        }
+
+        /* Center the search bar container */
+        .search-bar-container {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 400px; /* Fixed width for consistency */
+        }
+
+        /* Style the search bar */
+        .search-bar {
+            display: flex;
+            align-items: center;
+            background-color: #fff;
+            padding: 3px 10px;
+            border-radius: 20px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+            width: 100%;
+        }
+
+        .search-bar input {
+            border: none;
+            outline: none;
+            flex-grow: 1;
+            padding: 5px;
+            font-size: 1rem;
+        }
+
+        .search-bar button {
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 1.2rem;
+            color: #A0AD96;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Style additional header buttons */
+        .header-buttons {
+            position: absolute;
+            right: 20px; /* Align buttons to the right */
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+
+        .header-buttons button {
+            background: none;
+            border: none;
+            cursor: pointer;
+        }
+
+        .header-buttons i {
+            font-size: 1.5rem;
+            color: #fff;
+        }
+
+        /* Style the menu overlay */
+        .menu-overlay {
+            position: absolute;
+            top: 70px;
+            right: 10px;
+            width: 200px;
+            background-color: #A0AD96;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+            display: none;
+            z-index: 1000;
+        }
+
+        .menu-overlay ul {
+            list-style: none;
+            margin: 0;
+            padding: 10px 0;
+        }
+
+        .menu-overlay li {
+            padding: 10px 20px;
+            font-size: 1rem;
+            color: #fff;
+            cursor: pointer;
+        }
+
+        .menu-overlay li:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .content-wrapper {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: calc(100vh - 80px);
+            background-color: #e0e0e0;
+            width: 90%;
+            max-width: 850px;
+            margin: 0 auto;
+            padding: 20px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            position: relative;
+        }
+
+        /* Responsive styles */
+        @media (max-width: 600px) {
+            .brand {
+                font-size: 2rem;
+            }
+            .content-wrapper {
+                width: 95%;
+                padding: 15px;
+            }
+            .search-bar-container {
+                width: 80%;
+            }
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@900&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <!-- Header Section -->
+    <header>
+        <a href="#" class="brand">THICKETS</a>
+        <div class="search-bar-container">
+            <div class="search-bar">
+                <input type="text" placeholder="Search">
+                <button><i class="fas fa-search"></i></button>
+            </div>
+        </div>
+        <div class="header-buttons">
+            <button><i class="fas fa-heart"></i></button>
+            <button id="profile-icon"><i class="fas fa-user"></i></button>
+            <button id="menu-button"><i class="fas fa-bars"></i></button>
+        </div>
+    </header>
+
+    <!-- Menu Overlay -->
+    <div class="menu-overlay" id="menu-overlay">
+        <ul>
+            <li>User Profile</li>
+            <li>My Orders</li>
+            <li>Settings</li>
+        </ul>
+    </div>
+
+    <div class="content-wrapper">
+    </div>
+
+    <!-- Footer Section -->
+    <footer style="background-color: #A0AD96; height: 80px;"></footer>
+
+    <script>
+        // Redirect to signup page on profile icon click
+        document.getElementById('profile-icon').addEventListener('click', () => {
+            window.location.href = 'signup.html';
+        });
+
+        const menuButton = document.getElementById('menu-button');
+        const menuOverlay = document.getElementById('menu-overlay');
+
+        // Toggle menu visibility
+        menuButton.addEventListener('click', (event) => {
+            event.stopPropagation(); // Prevent click from propagating to the body
+            menuOverlay.style.display = menuOverlay.style.display === 'block' ? 'none' : 'block';
+        });
+
+        // Hide the menu when clicking outside
+        document.addEventListener('click', () => {
+            menuOverlay.style.display = 'none';
+        });
+
+        // Prevent menu click from closing it
+        menuOverlay.addEventListener('click', (event) => {
+            event.stopPropagation();
+        });
+    </script>
+</body>
+</html>

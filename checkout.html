@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CHECKOUT</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #fff;
+        }
+
+        header {
+            position: relative;
+            display: flex;
+            align-items: center;
+            background-color: #A0AD96;
+            padding: 10px 20px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            height: 60px;
+        }
+
+        .brand {
+            font-family: 'Work Sans', sans-serif;
+            font-size: 2.5rem;
+            font-weight: 900;
+            color: #fff;
+            text-decoration: none;
+            position: absolute;
+            left: 20px;
+        }
+
+        .brand:hover {
+            cursor: pointer;
+        }
+
+        .search-bar-container {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 400px;
+        }
+
+        .search-bar {
+            display: flex;
+            align-items: center;
+            background-color: #fff;
+            padding: 3px 10px;
+            border-radius: 20px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+            width: 100%;
+        }
+
+        .search-bar input {
+            border: none;
+            outline: none;
+            flex-grow: 1;
+            padding: 5px;
+            font-size: 1rem;
+        }
+
+        .search-bar button {
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 1.2rem;
+            color: #A0AD96;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .header-buttons {
+            position: absolute;
+            right: 20px;
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+
+        .header-buttons button {
+            background: none;
+            border: none;
+            cursor: pointer;
+        }
+
+        .header-buttons i {
+            font-size: 1.5rem;
+            color: #fff;
+        }
+
+        .menu-overlay {
+            position: absolute;
+            top: 70px;
+            right: 10px;
+            width: 200px;
+            background-color: #A0AD96;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+            display: none;
+            z-index: 1000;
+        }
+
+        .menu-overlay ul {
+            list-style: none;
+            margin: 0;
+            padding: 10px 0;
+        }
+
+        .menu-overlay li {
+            padding: 10px 20px;
+            font-size: 1rem;
+            color: #fff;
+            cursor: pointer;
+        }
+
+        .menu-overlay li:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .checkout-container {
+            display: flex;
+            justify-content: space-between;
+            gap: 20px;
+        }
+
+        .blank-section, .form-section, .summary-section {
+            background: #fff;
+            padding: 20px;
+        }
+
+        .blank-section {
+            flex: 0.7;
+        }
+
+        .form-section {
+            flex: 1.3;
+        }
+
+        .summary-section {
+            padding: 300px 35px;
+            background-color: #e0e0e0;
+            flex: 1;
+        }
+
+        h2 {
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 0.9rem;
+            margin-bottom: 5px;
+            color: #555;
+        }
+
+        .form-group input {
+            width: 95%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 1rem;
+        }
+
+        .payment-methods {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .payment-methods button {
+            flex: 1;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background: #f7f7f7;
+            font-size: 1rem;
+            cursor: pointer;
+        }
+
+        .payment-methods button.active {
+            background: #A0AD96;
+            color: #fff;
+        }
+
+        .summary-section h2 {
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+        }
+
+        .summary-section .total {
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin-top: 20px;
+        }
+
+        .summary-section button {
+            padding: 15px 30px;
+            background-color: #5f6f52;
+            color: white;
+            font-size: 1.2rem;
+            font-weight: bold;
+            border: none;
+            border-radius: 15px;
+            cursor: pointer;
+            margin-top: 20px;
+            width: 300px;
+        }
+
+        .summary-section button:hover {
+            background: #8C9B79;
+        }
+
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@900&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <header>
+        <a href="homepage.html" class="brand">THICKETS</a>
+        <div class="search-bar-container">
+            <div class="search-bar">
+                <input type="text" placeholder="Search">
+                <button><i class="fas fa-search"></i></button>
+            </div>
+        </div>
+        <div class="header-buttons">
+            <button><i class="fas fa-heart"></i></button>
+            <button id="profile-icon"><i class="fas fa-user"></i></button>
+            <button id="menu-button"><i class="fas fa-bars"></i></button>
+        </div>
+    </header>
+
+    <div class="menu-overlay" id="menu-overlay">
+        <ul>
+            <li id="menu-profile">User Profile</li>
+            <li>Chatbot</li>
+            <li>Settings</li>
+        </ul>
+    </div>
+
+    <div class="checkout-container">
+        <div class="blank-section"></div>
+        <div class="form-section">
+            <br><h1>CHECKOUT</h1>
+            <br><h2>Customer Information</h2>
+            <div class="form-group">
+                <label for="first-name">First Name*</label>
+                <input type="text" id="first-name" placeholder="John">
+            </div>
+            <div class="form-group">
+                <label for="last-name">Last Name*</label>
+                <input type="text" id="last-name" placeholder="Doe">
+            </div>
+            <div class="form-group">
+                <label for="email">Email Address*</label>
+                <input type="email" id="email" placeholder="john.doe@example.com">
+            </div>
+            <div class="form-group">
+                <label for="phone">Phone Number*</label>
+                <input type="tel" id="phone" placeholder="123-456-7890">
+            </div>
+
+            <h2>Delivery Information</h2>
+            <div class="form-group">
+                <label for="street">Street Address*</label>
+                <input type="text" id="street" placeholder="123 Main St">
+            </div>
+            <div class="form-group">
+                <label for="address-optional">Address (Optional)</label>
+                <input type="text" id="address-optional" placeholder="Apt, Suite, etc">
+            </div>
+            <div class="form-group">
+                <label for="city">City*</label>
+                <input type="text" id="city" placeholder="New York">
+            </div>
+            <div class="form-group">
+                <label for="state">State*</label>
+                <input type="text" id="state" placeholder="NY">
+            </div>
+            <div class="form-group">
+                <label for="zip">Zip Code*</label>
+                <input type="text" id="zip" placeholder="10001">
+            </div>
+
+            <h2>Payment Method</h2>
+            <div class="payment-methods">
+                <button class="active">Credit/Debit Card</button>
+                <button>Kakaopay</button>
+                <button>Mobile Payment</button>
+                <button>Bank Transfer</button>
+            </div>
+            <div class="form-group">
+                <br><label for="card-number">Credit/Debit Card Number</label>
+                <input type="text" id="card-number" placeholder="1234 5678 9012 3456">
+            </div>
+            <div class="form-group">
+                <label for="cvv">CVV</label>
+                <input type="text" id="cvv" placeholder="123">
+            </div>
+        </div>
+
+        <div class="summary-section" id="order-summary"></div>
+    </div>
+
+    <footer style="background-color: #A0AD96; height: 80px;"></footer>
+
+    <script>
+        const profileIcon = document.getElementById('profile-icon');
+        const menuProfile = document.getElementById('menu-profile');
+
+        function redirectBasedOnLogin() {
+            const loggedInUser = sessionStorage.getItem('loggedInUser');
+
+            if (loggedInUser) {
+                // Redirect to profile.html if the user is logged in
+                profileIcon.addEventListener('click', () => {
+                    window.location.href = 'profile.html';
+                });
+                menuProfile.addEventListener('click', () => {
+                    window.location.href = 'profile.html';
+                });
+            } else {
+                // Redirect to signup.html if the user is not logged in
+                profileIcon.addEventListener('click', () => {
+                    window.location.href = 'signup.html';
+                });
+                menuProfile.addEventListener('click', () => {
+                    window.location.href = 'signup.html';
+                });
+            }
+        }
+
+        redirectBasedOnLogin();
+
+        const menuButton = document.getElementById('menu-button');
+        const menuOverlay = document.getElementById('menu-overlay');
+
+        menuButton.addEventListener('click', (event) => {
+            event.stopPropagation();
+            menuOverlay.style.display = menuOverlay.style.display === 'block' ? 'none' : 'block';
+        });
+
+        document.addEventListener('click', () => {
+            menuOverlay.style.display = 'none';
+        });
+
+        menuOverlay.addEventListener('click', (event) => {
+            event.stopPropagation();
+        });
+
+        window.addEventListener('DOMContentLoaded', () => {
+            const selectedConcert = "2024 CRUSH HOUR: O";
+            const selectedDate = localStorage.getItem('selectedDate');
+            const selectedSeats = JSON.parse(localStorage.getItem('selectedSeats')) || [];
+            const ticketPrice = 100000; // Price per ticket in KRW
+            const totalPrice = selectedSeats.length * ticketPrice;
+
+            localStorage.setItem('selectedConcert', selectedConcert);
+
+            const summaryElement = document.getElementById('order-summary');
+            summaryElement.innerHTML = `
+                <h2>ORDER SUMMARY</h2>
+                <p><strong>Concert:</strong> ${selectedConcert}</p>
+                <p><strong>Date:</strong> ${selectedDate}</p>
+                <p><strong>Seats:</strong> ${selectedSeats.join(', ')}</p>
+                <p class="total"><strong>TOTAL:</strong> ${totalPrice.toLocaleString()} KRW</p>
+                <br><button id="proceed-button">PROCEED TO PAYMENT</button>
+            `;
+
+            document.getElementById('proceed-button').addEventListener('click', () => {
+                const requiredFields = [
+                    document.getElementById('first-name'),
+                    document.getElementById('last-name'),
+                    document.getElementById('email'),
+                    document.getElementById('phone'),
+                    document.getElementById('street'),
+                    document.getElementById('city'),
+                    document.getElementById('state'),
+                    document.getElementById('zip'),
+                    document.getElementById('card-number'),
+                    document.getElementById('cvv')
+                ];
+
+                const missingFields = requiredFields.filter(field => !field.value.trim());
+
+                if (missingFields.length > 0) {
+                    alert('Please fill in all required fields before proceeding.');
+                } else {
+                    const loggedInUser = JSON.parse(sessionStorage.getItem('loggedInUser'));
+                    const order = {
+                        concert: selectedConcert,
+                        date: selectedDate,
+                        seats: selectedSeats
+                    };
+
+                    // Update the 'orders' field in the loggedInUser
+                    if (loggedInUser) {
+                        loggedInUser.orders = loggedInUser.orders === "none\r" ? [order] : [...loggedInUser.orders, order];
+                        sessionStorage.setItem('loggedInUser', JSON.stringify(loggedInUser));
+                    }
+
+                    // Clear local storage
+                    localStorage.removeItem('selectedConcert');
+                    localStorage.removeItem('selectedDate');
+                    localStorage.removeItem('selectedSeats');
+
+                    window.location.href = 'confirmation.html';
+                }
+            });
+        });
+    </script>
+</body>
+</html>
